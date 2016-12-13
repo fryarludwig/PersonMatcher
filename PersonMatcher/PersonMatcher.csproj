@@ -60,14 +60,15 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Matcher.cs" />
-    <Compile Include="MatchWorker.cs" />
-    <Compile Include="Patterns\CasualMatchingPattern.cs" />
-    <Compile Include="Patterns\LegalIdentificationPattern.cs" />
-    <Compile Include="Patterns\MatchingPattern.cs" />
+    <Compile Include="MatchMaker.cs" />
+    <Compile Include="Patterns\ChildPattern.cs" />
+    <Compile Include="Patterns\GenericPattern.cs" />
+    <Compile Include="Patterns\LegalIdPattern.cs" />
+    <Compile Include="Patterns\BasePattern.cs" />
     <Compile Include="Patterns\MatchingPatternFactory.cs" />
-    <Compile Include="Patterns\MatchResult.cs" />
-    <Compile Include="Patterns\ScoringPattern.cs" />
-    <Compile Include="Patterns\TypePattern.cs" />
+    <Compile Include="Persons\MatchResult.cs" />
+    <Compile Include="Patterns\GroupingPattern.cs" />
+    <Compile Include="Patterns\AdultPattern.cs" />
     <Compile Include="Persons\Adult.cs" />
     <Compile Include="Persons\Child.cs" />
     <Compile Include="Persons\Person.cs" />

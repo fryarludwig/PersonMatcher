@@ -9,17 +9,20 @@ namespace PersonMatcher.Patterns
     {
         static MatchingPatternFactory() { }
 
-        public static List<MatchingPattern> GetSortedPatterns(params object[] constructorArgs)
+        public static List<BasePattern> GetSortedPatterns(Type forceType = null)
         {
-            List<MatchingPattern> objectList = new List<MatchingPattern>();
-            foreach (Type type in Assembly.GetAssembly(typeof(MatchingPattern)).GetTypes().Where(myType => myType.IsClass 
-            && !myType.IsAbstract 
-            && myType.IsSubclassOf(typeof(MatchingPattern))))
+            List<BasePattern> patternList = new List<BasePattern>();
+            foreach (Type type in Assembly.GetAssembly(typeof(BasePattern)).GetTypes().Where(myType => myType.IsClass 
+                && !myType.IsAbstract && myType.IsSubclassOf(typeof(BasePattern))))
             {
-                objectList.Add((MatchingPattern)Activator.CreateInstance(type, constructorArgs));
+                BasePattern pattern = (BasePattern)Activator.CreateInstance(type, null);
+                if (pattern.CanHandleType(forceType))
+                {
+                    patternList.Add(pattern);
+                }
             }
-            
-            return objectList.OrderBy(o => o.FilterWeight).ToList(); 
+
+            return patternList.OrderBy(o => o.Weight).ToList();
         }
     }
 }

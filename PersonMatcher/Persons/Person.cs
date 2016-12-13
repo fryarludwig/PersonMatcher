@@ -35,5 +35,10 @@ namespace PersonMatcher.Persons
 
         [DataMember]
         public String Gender { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ObjectId.ToString().PadRight(2)}: {FirstName} {LastName}";
+        }
     }
 }

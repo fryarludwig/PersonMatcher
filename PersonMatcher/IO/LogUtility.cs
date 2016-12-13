@@ -28,7 +28,7 @@ namespace PersonMatcher.IO
             LevelDictionary["Info"] = Level.INFO;
             LevelDictionary["Trace"] = Level.TRACE;
         }
-        
+
         public static Level LevelFromString(string levelString)
         {
             Level result = Level.NONE;
@@ -83,6 +83,11 @@ namespace PersonMatcher.IO
             LogUtilityHelper.Log(Level.ERROR, LogSource, logMessage);
         }
 
+        public bool CanPrintLevel(Level level)
+        {
+            return level <= LogUtilityHelper.GlobalLogLevel;
+        }
+
         public string LogSource
         {
             get { return _name.Length > 0 ? _name : "UNKNOWN"; }
@@ -123,6 +128,16 @@ namespace PersonMatcher.IO
             {
                 LogUtilityHelper.GlobalLogLevel = value;
             }
+        }
+
+        public void RegisterGuiCallback(MainWindow winForm)
+        {
+            LogUtilityHelper.OnGuiLogPrint += new LogHelper.GuiLogPrintEvent(winForm.PrintLogMessage);
+        }
+
+        public void RemoveGuiCallback(MainWindow winForm)
+        {
+            LogUtilityHelper.OnGuiLogPrint -= new LogHelper.GuiLogPrintEvent(winForm.PrintLogMessage);
         }
     }
 
@@ -174,6 +189,7 @@ namespace PersonMatcher.IO
                 }
                 if (GuiOutput)
                 {
+                    OnGuiLogPrint?.Invoke(new LogItem(logLevel, logMessageLine));
                     MainWindow.GuiLogQueue.Enqueue(new LogItem(logLevel, logMessageLine));
                 }
             }
@@ -189,25 +205,22 @@ namespace PersonMatcher.IO
 
             while (ContinueThread || !LogQueue.IsEmpty)
             {
-                if (LogQueue.IsEmpty)
+                string message;
+                if (!LogQueue.IsEmpty && LogQueue.TryDequeue(out message))
                 {
-                    Thread.Sleep(50);
+                    if (PrintToConsole)
+                    {
+                        Console.WriteLine(message);
+                    }
+                    if (WriteToFile)
+                    {
+                        logFile.WriteLine(message);
+                        logFile.Flush();
+                    }
                 }
                 else
                 {
-                    string message;
-                    if (LogQueue.TryDequeue(out message))
-                    {
-                        if (PrintToConsole)
-                        {
-                            Console.WriteLine(message);
-                        }
-                        if (WriteToFile)
-                        {
-                            logFile.WriteLine(message);
-                            logFile.Flush();
-                        }
-                    }
+                    Thread.Sleep(50);
                 }
             }
         }
@@ -222,6 +235,9 @@ namespace PersonMatcher.IO
         public bool GuiOutput { get; set; }
         public bool WriteToFile { get; set; }
         public string LogFileName { get; set; }
+
+        public delegate void GuiLogPrintEvent(LogItem message);
+        public event GuiLogPrintEvent OnGuiLogPrint;
 
         private ConcurrentQueue<string> LogQueue = new ConcurrentQueue<string>();
         private volatile bool ContinueThread = false;
