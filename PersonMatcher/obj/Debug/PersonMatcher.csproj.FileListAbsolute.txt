@@ -1,0 +1,9 @@
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\bin\Debug\PersonMatcher.exe.config
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.csprojResolveAssemblyReference.cache
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.MainWindow.resources
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.Properties.Resources.resources
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.csproj.GenerateResource.Cache
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\bin\Debug\PersonMatcher.exe
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\bin\Debug\PersonMatcher.pdb
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.exe
+c:\users\fryar\documents\visual studio 2015\Projects\PersonMatcher\PersonMatcher\obj\Debug\PersonMatcher.pdb
